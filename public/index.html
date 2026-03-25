@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIAAC-LGPD — Avaliação de Conformidade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<!-- Auth Screen -->
+<div id="auth-screen" class="auth-wrap" style="display:none">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="abadge">SIAAC-LGPD v2.0 · IFBA 2026</div>
+      <h1>Avaliação de Conformidade LGPD</h1>
+      <p>Sistema Inteligente Adaptativo · Powered by Gemini AI</p>
+    </div>
+    <div class="atabs">
+      <div class="atab active" id="tab-login" onclick="switchAuthTab('login')">Entrar</div>
+      <div class="atab" id="tab-register" onclick="switchAuthTab('register')">Criar conta</div>
+    </div>
+    <div id="form-login">
+      <div class="f"><label>E-mail</label><input type="email" id="login-email" placeholder="seu@email.com" autocomplete="email"/></div>
+      <div class="f"><label>Senha</label><input type="password" id="login-senha" placeholder="••••••••" autocomplete="current-password"/></div>
+      <div id="login-err"></div>
+      <button class="btn bp bfull" style="margin-top:16px" onclick="doLogin()">Entrar →</button>
+      <p style="font-size:12px;color:var(--hint);text-align:center;margin-top:12px">Demo: <strong>demo@siaac.br</strong> / <strong>demo123</strong></p>
+    </div>
+    <div id="form-register" style="display:none">
+      <div class="g2">
+        <div class="f"><label>Nome</label><input type="text" id="reg-nome" placeholder="Seu nome"/></div>
+        <div class="f"><label>Sobrenome</label><input type="text" id="reg-sobrenome" placeholder="Sobrenome"/></div>
+        <div class="f gfull"><label>E-mail</label><input type="email" id="reg-email" placeholder="seu@email.com"/></div>
+        <div class="f"><label>Senha</label><input type="password" id="reg-senha" placeholder="Min. 8 caracteres"/></div>
+        <div class="f"><label>Confirmar senha</label><input type="password" id="reg-senha2" placeholder="Repita a senha"/></div>
+        <div class="f gfull"><label>Cargo</label>
+          <select id="reg-cargo"><option value="">Selecione...</option>
+            <option>DPO / Encarregado de Dados</option><option>Analista de TI / Segurança</option>
+            <option>Gestor / Diretor</option><option>Jurídico / Compliance</option>
+            <option>RH / Pessoas</option><option>Outro</option></select></div>
+        <div class="f gfull"><label>Empresa (opcional)</label><input type="text" id="reg-empresa" placeholder="Nome da organização"/></div>
+      </div>
+      <div id="reg-err"></div>
+      <button class="btn bp bfull" style="margin-top:16px" onclick="doRegister()">Criar conta →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Main App -->
+<div id="main-app" class="app" style="display:none">
+  <div class="sidebar">
+    <div class="sl-logo">
+      <div class="sl-badge">SIAAC-LGPD v2.0</div>
+      <h2>Avaliação de Conformidade LGPD</h2>
+      <p>IFBA · TCC 2026</p>
+    </div>
+    <div class="sl-user">
+      <div class="u-info">
+        <div class="u-av" id="u-av">--</div>
+        <div><div class="u-name" id="u-name">--</div><div class="u-email" id="u-email">--</div></div>
+      </div>
+    </div>
+    <nav class="sl-nav">
+      <div class="ns">Menu</div>
+      <div class="ni active" onclick="navTo('dashboard')" id="nav-dashboard"><span class="ni-icon">▦</span> Dashboard</div>
+      <div class="ni" onclick="navTo('nova')" id="nav-nova"><span class="ni-icon">＋</span> Nova Avaliação</div>
+      <div class="ni" onclick="navTo('historico')" id="nav-historico"><span class="ni-icon">◷</span> Histórico</div>
+      <div class="ns">Conta</div>
+      <div class="ni" onclick="navTo('perfil')" id="nav-perfil"><span class="ni-icon">◎</span> Meu Perfil</div>
+    </nav>
+    <div class="sl-foot"><div class="logout" onclick="doLogout()"><span>↩</span> Sair da conta</div></div>
+  </div>
+
+  <div class="main"><div class="mi">
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="ph"><h1 id="dash-greeting">Bem-vindo</h1><p>Visão geral das suas avaliações de conformidade</p></div>
+      <div class="qa-banner" id="qa-banner">
+        <div class="qa-banner-icon">📋</div>
+        <div class="qa-banner-body">
+          <div class="qa-banner-title">Questionário em andamento</div>
+          <div class="qa-banner-sub" id="qa-banner-sub">Você tem respostas salvas. Retome de onde parou.</div>
+          <div class="qa-banner-prog"><div class="qa-banner-prog-fill" id="qa-banner-prog-fill" style="width:0%"></div></div>
+        </div>
+        <div class="qa-banner-actions">
+          <button class="btn bg" style="font-size:12px;padding:7px 14px" onclick="descartarRascunho()">Descartar</button>
+          <button class="btn bp" style="font-size:12px;padding:7px 14px;background:var(--accent);color:#fff" onclick="continuarRascunho()">Continuar →</button>
+        </div>
+      </div>
+      <div class="dgrid" id="dash-metrics"></div>
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <strong style="font-size:14px">Avaliações recentes</strong>
+          <button class="btn bg" style="padding:6px 12px;font-size:12px" onclick="navTo('historico')">Ver todas →</button>
+        </div>
+        <div id="dash-recent"></div>
+      </div>
+    </div>
+
+    <!-- NOVA AVALIAÇÃO -->
+    <div class="page" id="page-nova">
+      <div class="ph"><h1>Nova Avaliação</h1><p>Avaliação adaptativa de conformidade à LGPD</p></div>
+      <div class="steps" id="eval-steps"></div>
+      <div id="step-0">
+        <div id="cog-preview" class="card"></div>
+        <div id="org-preview" class="card" style="margin-top:0"></div>
+        <div id="missing-warning" class="card" style="display:none;background:#fdf4e8;border-color:rgba(230,126,34,.3)">
+          <p style="color:var(--warn);font-size:13px">⚠ Preencha os perfis acima antes de continuar.</p>
+        </div>
+        <div style="margin-top:16px;display:flex;justify-content:flex-end">
+          <button class="btn bp" id="btn-gerar" onclick="gerarQ()">Gerar Questionário com IA →</button>
+        </div>
+      </div>
+      <div id="step-1" style="display:none">
+        <div class="card">
+          <div style="font-size:16px;font-weight:600;margin-bottom:4px">📋 Gerando questionário personalizado...</div>
+          <div style="font-size:13px;color:var(--muted);margin-bottom:18px">Aguarde enquanto o Gemini cria as perguntas</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+            <div style="flex:1;height:4px;background:var(--s2);border-radius:2px;overflow:hidden">
+              <div id="stream-bar" style="height:100%;width:0%;background:var(--brand);border-radius:2px;transition:width .3s"></div>
+            </div>
+            <span id="stream-count" style="font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;white-space:nowrap">0%</span>
+          </div>
+          <div id="stream-container"></div>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border)" id="stream-status-row">
+            <div class="spin" style="width:18px;height:18px;border-width:2px"></div>
+            <span id="q-load-status" style="font-size:12px;color:var(--hint);font-family:'DM Mono',monospace">Aguardando IA...</span>
+          </div>
+          <div id="stream-ready" style="display:none;margin-top:16px">
+            <button class="btn bp" style="width:100%;justify-content:center" onclick="confirmarStreamCompleto()">Continuar para o questionário →</button>
+          </div>
+        </div>
+      </div>
+      <div id="step-2" style="display:none">
+        <div class="card">
+          <div style="font-size:16px;font-weight:600;margin-bottom:4px">📋 Questionário Adaptativo</div>
+          <div style="font-size:13px;color:var(--muted);margin-bottom:16px" id="q-subtitle-txt">Avaliação personalizada</div>
+          <div class="qcnt" id="q-counter">0 respondidas</div>
+          <div id="q-container"></div>
+          <div id="q-origin-notice" style="font-size:11px;color:var(--hint);font-family:'DM Mono',monospace;text-align:right;margin-top:12px;margin-bottom:-4px"></div>
+          <div class="br">
+            <button class="back-btn" onclick="confirmarVoltarQuestionario()">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 12L6 8l4-4"/></svg>Voltar
+            </button>
+            <div class="br-right"><button class="btn bp" onclick="calcular()">Calcular Índice de Conformidade →</button></div>
+          </div>
+        </div>
+      </div>
+      <div id="step-3" style="display:none">
+        <div class="card"><div class="lbox"><div class="spin"></div>
+          <div><strong style="font-size:15px">Gerando relatório inteligente...</strong>
+          <p>Calculando índice · Classificando maturidade · Elaborando recomendações</p>
+          <div class="lst" id="r-load-status">Processando...</div></div>
+        </div></div>
+      </div>
+      <div id="step-4" style="display:none">
+        <div class="card">
+          <div class="gauge">
+            <div class="g-score" id="g-score">0<span class="gunit">%</span></div>
+            <div class="g-level" id="g-level"></div>
+            <div class="gbar"><div class="g-fill" id="g-fill" style="width:0%"></div></div>
+          </div>
+          <div id="result-areas" style="margin-top:16px"></div>
+        </div>
+        <div class="card" id="result-report"></div>
+        <div class="br">
+          <button class="back-btn" onclick="navTo('historico')">Ver histórico</button>
+          <button class="btn bp" onclick="novaAvaliacao()">Nova avaliação</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTÓRICO -->
+    <div class="page" id="page-historico">
+      <div class="ph"><h1>Histórico de Avaliações</h1><p id="hcount"></p></div>
+      <div class="card" style="padding:14px 20px;margin-bottom:16px">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <select id="hf-nivel" onchange="renderHistorico()" style="font-size:13px;padding:7px 10px;border-radius:var(--rs);border:0.5px solid var(--border2);background:var(--s)">
+            <option value="">Todos os níveis</option>
+            <option>Inicial</option><option>Básico</option><option>Intermediário</option>
+            <option>Gerenciado</option><option>Otimizado</option>
+          </select>
+          <select id="hf-order" onchange="renderHistorico()" style="font-size:13px;padding:7px 10px;border-radius:var(--rs);border:0.5px solid var(--border2);background:var(--s)">
+            <option value="desc">Mais recente</option>
+            <option value="asc">Mais antigo</option>
+            <option value="sd">Maior índice</option>
+            <option value="sa">Menor índice</option>
+          </select>
+        </div>
+      </div>
+      <div id="hist-list"></div>
+    </div>
+
+    <!-- PERFIL -->
+    <div class="page" id="page-perfil">
+      <div class="ph"><h1>Meu Perfil</h1></div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+          <div class="u-av" id="pf-av" style="width:52px;height:52px;font-size:18px;background:var(--brand)">--</div>
+          <div>
+            <div style="font-size:18px;font-weight:600" id="pf-nome"></div>
+            <div style="font-size:13px;color:var(--muted)" id="pf-email"></div>
+            <div style="font-size:12px;color:var(--hint)" id="pf-cargo"></div>
+          </div>
+        </div>
+        <div class="g2" style="margin-bottom:16px">
+          <div class="met"><div class="ml">Empresa</div><div style="font-size:13px;font-weight:500" id="pf-empresa">—</div></div>
+          <div class="met"><div class="ml">Avaliações</div><div class="mv mv-b" id="pf-total">0</div></div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn bp" onclick="togglePerfilEdit('cognitivo')">Editar perfil do usuário</button>
+          <button class="btn bg" onclick="togglePerfilEdit('org')">Editar perfil organizacional</button>
+          <button class="btn bd" onclick="confirmarExcluirDados()">Excluir avaliações</button>
+        </div>
+      </div>
+      <div class="card" id="edit-cognitivo" style="display:none">
+        <strong style="font-size:15px">Editar perfil do usuário</strong>
+        <div class="lgrid" id="edit-level-grid" style="margin-top:14px">
+          <div class="lcard" onclick="selLevel('basico',this,'edit')"><div class="ck">✓</div><div class="lc-ico">📗</div><div class="lc-n">Básico</div><div class="lc-d">Gestores sem formação técnica</div></div>
+          <div class="lcard" onclick="selLevel('intermediario',this,'edit')"><div class="ck">✓</div><div class="lc-ico">📘</div><div class="lc-n">Intermediário</div><div class="lc-d">Analistas, RH, Jurídico</div></div>
+          <div class="lcard" onclick="selLevel('tecnico',this,'edit')"><div class="ck">✓</div><div class="lc-ico">📙</div><div class="lc-n">Técnico</div><div class="lc-d">DPO, CISO, Analistas sênior</div></div>
+        </div>
+        <div class="g2" style="margin-top:14px">
+          <div class="f"><label>Área de atuação</label>
+            <select id="edit-pc-area"><option value="">Selecione...</option>
+              <option>TI / Tecnologia</option><option>Jurídico / Compliance</option>
+              <option>RH / Pessoas</option><option>Gestão / Diretoria</option>
+              <option>Financeiro</option><option>Marketing / Dados</option><option>Operações</option></select></div>
+          <div class="f"><label>Experiência com LGPD</label>
+            <select id="edit-pc-lgpd"><option value="">Selecione...</option>
+              <option>Nenhuma — ouvi falar pela primeira vez</option>
+              <option>Básica — conheço os princípios gerais</option>
+              <option>Intermediária — já participei de adequações</option>
+              <option>Avançada — atuo como DPO ou equivalente</option></select></div>
+        </div>
+        <div id="edit-cog-ok" style="display:none" class="ok">✓ Perfil atualizado.</div>
+        <button class="btn bp" style="margin-top:12px" onclick="salvarPerfilCognitivo()">Salvar</button>
+      </div>
+      <div class="card" id="edit-org" style="display:none">
+        <strong style="font-size:15px">Editar perfil organizacional</strong>
+        <div class="g2" style="margin-top:14px">
+          <div class="f gfull"><label>Empresa</label><input type="text" id="edit-po-nome" placeholder="Nome da organização"/></div>
+          <div class="f"><label>Porte</label><select id="edit-po-porte"><option value="">Selecione...</option>
+            <option>MEI — Microempreendedor Individual</option><option>Pequena empresa (EPP)</option>
+            <option>Média empresa</option><option>Grande empresa</option></select></div>
+          <div class="f"><label>Setor</label><select id="edit-po-setor"><option value="">Selecione...</option>
+            <option>Saúde / Clínicas</option><option>Financeiro / Fintechs</option><option>Educação</option>
+            <option>Varejo / Comércio</option><option>Tecnologia / SaaS</option><option>Indústria</option>
+            <option>Serviços profissionais</option><option>Governo / Público</option><option>Outro</option></select></div>
+          <div class="f"><label>Colaboradores</label><select id="edit-po-colab"><option value="">Selecione...</option>
+            <option>1 a 9</option><option>10 a 49</option><option>50 a 249</option><option>250 ou mais</option></select></div>
+          <div class="f"><label>Equipamentos de TI</label><input type="number" id="edit-po-equip" min="0" placeholder="Quantidade aproximada"/></div>
+        </div>
+        <div class="sh">Dados pessoais tratados</div>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" id="ed-cpf"/><span>CPF / RG / dados de identificação</span></label>
+          <label class="ci"><input type="checkbox" id="ed-saude"/><span>Dados de saúde</span></label>
+          <label class="ci"><input type="checkbox" id="ed-fin"/><span>Dados financeiros</span></label>
+          <label class="ci"><input type="checkbox" id="ed-bio"/><span>Dados biométricos</span></label>
+          <label class="ci"><input type="checkbox" id="ed-cri"/><span>Dados de crianças</span></label>
+          <label class="ci"><input type="checkbox" id="ed-loc"/><span>Dados de localização</span></label>
+          <label class="ci"><input type="checkbox" id="ed-comp"/><span>Dados comportamentais</span></label>
+        </div>
+        <div class="sh">Políticas existentes</div>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" id="ed-priv"/><span>Política de privacidade publicada</span></label>
+          <label class="ci"><input type="checkbox" id="ed-dpo"/><span>DPO designado</span></label>
+          <label class="ci"><input type="checkbox" id="ed-trei"/><span>Treinamentos realizados</span></label>
+          <label class="ci"><input type="checkbox" id="ed-map"/><span>Mapeamento (ROPA) feito</span></label>
+        </div>
+        <div id="edit-org-ok" style="display:none" class="ok">✓ Perfil organizacional atualizado.</div>
+        <button class="btn bp" style="margin-top:12px" onclick="salvarPerfilOrg()">Salvar</button>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<div class="mo" id="modal-detail">
+  <div class="mbox">
+    <button class="mclose" onclick="closeModal()">×</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
