@@ -42,7 +42,12 @@ async function updateDraftBanner() {
 }
 
 async function descartarRascunho() {
-  if (!confirm('Deseja descartar o questionário em andamento?\nTodas as respostas salvas serão perdidas.')) return;
+  const ok = await showConfirm(
+    'Descartar questionário',
+    'Deseja descartar o questionário em andamento?<br><span style="color:var(--danger);font-size:12px">Todas as respostas salvas serão perdidas.</span>',
+    { okLabel: 'Descartar', type: 'danger' }
+  );
+  if (!ok) return;
   await clearDraft();
   evalQuestions = []; evalAnswers = {}; evalSkipped = {}; cogLevel = null;
   updateDraftBanner();

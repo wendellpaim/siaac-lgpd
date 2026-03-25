@@ -145,7 +145,12 @@ async function atualizarPrazo(recId, valor) {
 
 // ── Exclusão de avaliação ──────────────────────────────
 async function excluirAv(avId) {
-  if (!confirm('Deseja remover esta avaliação do histórico?\nEsta ação não pode ser desfeita.')) return;
+  const ok = await showConfirm(
+    'Remover avaliação',
+    'Deseja remover esta avaliação do histórico?<br><span style="color:var(--danger);font-size:12px">Esta ação não pode ser desfeita.</span>',
+    { okLabel: 'Remover', type: 'danger' }
+  );
+  if (!ok) return;
   try {
     await api('DELETE', `avaliacoes/${avId}/`);
     avaliacoes = avaliacoes.filter(a => a.id !== avId);

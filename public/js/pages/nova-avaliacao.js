@@ -227,8 +227,14 @@ function toggleSkip(qid) {
   saveDraft();
 }
 
-function confirmarVoltarQuestionario() {
+async function confirmarVoltarQuestionario() {
   if (Object.keys(evalAnswers).length > 0 || Object.keys(evalSkipped).length > 0) {
+    const ok = await showConfirm(
+      'Sair do questionário',
+      'Suas respostas serão salvas como rascunho e você poderá retomar de onde parou.',
+      { okLabel: 'Sair e salvar', cancelLabel: 'Continuar respondendo', type: 'warn' }
+    );
+    if (!ok) return;
     saveDraft();
   }
   evalAnswers = {}; evalSkipped = {}; evalQuestions = []; cogLevel = null; evalFromAI = false;

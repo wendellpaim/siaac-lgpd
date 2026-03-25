@@ -278,6 +278,19 @@
   </div></div>
 </div>
 
+<!-- Modal de Confirmação Customizado -->
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-box">
+    <div class="confirm-icon" id="confirm-icon">⚠️</div>
+    <div class="confirm-title" id="confirm-title">Confirmar ação</div>
+    <div class="confirm-msg" id="confirm-msg"></div>
+    <div class="confirm-actions">
+      <button class="btn bg" id="confirm-cancel-btn" onclick="confirmResolve(false)">Cancelar</button>
+      <button class="btn" id="confirm-ok-btn" onclick="confirmResolve(true)">Confirmar</button>
+    </div>
+  </div>
+</div>
+
 <div class="mo" id="modal-detail">
   <div class="mbox">
     <button class="mclose" onclick="closeModal()">×</button>
@@ -288,6 +301,8 @@
 <!-- ── Scripts modulares (ordem importa) ────────────── -->
 <!-- Core: API, estado global e utilitários -->
 <script src="/js/core/api.js"></script>
+<!-- Core: modal de confirmação customizado -->
+<script src="/js/core/confirm.js"></script>
 <!-- Core: navegação e bootstrap -->
 <script src="/js/core/nav.js"></script>
 <!-- Páginas -->

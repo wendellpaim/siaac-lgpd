@@ -93,7 +93,12 @@ async function salvarPerfilOrg() {
 }
 
 async function confirmarExcluirDados() {
-  if (!confirm('Isso removerá todo o histórico de avaliações da sua conta.\nSeus dados de perfil serão mantidos.\nDeseja continuar?')) return;
+  const ok = await showConfirm(
+    'Excluir histórico de avaliações',
+    'Isso removerá <strong>todo o histórico</strong> de avaliações da sua conta.<br>Seus dados de perfil serão mantidos.',
+    { okLabel: 'Excluir tudo', type: 'danger' }
+  );
+  if (!ok) return;
   try {
     await api('DELETE', 'avaliacoes/clear/');
     avaliacoes = [];
