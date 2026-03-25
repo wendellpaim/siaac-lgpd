@@ -154,11 +154,94 @@ function confirmarStreamCompleto() {
 // ── Prompt builder ─────────────────────────────────────
 function buildPrompt(pc, po) {
   const nivelInstrucao = {
-    basico: `NÍVEL BÁSICO: escreva como se conversasse com dono de pequena empresa. Nunca use siglas sem explicar. Perguntas devem começar com situações do cotidiano. Inclua ao menos 5 "perguntas de revelação de desconhecimento" (peso 3) que um gestor básico provavelmente responderá "Sim" por desconhecimento.`,
-    intermediario: `NÍVEL INTERMEDIÁRIO: use termos LGPD com contexto prático. Evite jargões técnicos de TI. Orientado a processos e documentação.`,
-    tecnico: `NÍVEL TÉCNICO: terminologia técnica e jurídica precisa. Referencie artigos da LGPD e controles ISO/CIS/NIST diretamente.`,
+    basico: `PÚBLICO-ALVO: dono ou gestor de pequena empresa sem formação técnica.
+- Use linguagem simples e direta, sem siglas ou termos jurídicos.
+- Inicie cada pergunta com uma situação prática do cotidiano da empresa.
+- Nunca use abreviações como LGPD, ANPD, DPO, ROPA sem explicar brevemente o significado na própria pergunta.
+- Exemplo BOM: "Sua empresa possui uma lista com todos os dados pessoais que coleta dos clientes (como nome, e-mail, CPF), para que usa cada dado e por quanto tempo guarda?"
+- Exemplo RUIM: "Há ROPA formalizado com finalidade e base legal mapeadas?"`,
+
+    intermediario: `PÚBLICO-ALVO: analista, profissional de RH, jurídico ou gestor com conhecimento básico de LGPD.
+- Use terminologia LGPD com contexto prático (explique brevemente a exigência legal ao formular).
+- Oriente as perguntas a processos, documentos e responsabilidades.
+- Exemplo BOM: "A empresa possui uma Política de Privacidade publicada e atualizada, descrevendo quais dados coleta, para que finalidade e com qual base legal (conforme exige o Art. 9º da LGPD)?"
+- Exemplo RUIM: "Art. 9º compliance status?"`,
+
+    tecnico: `PÚBLICO-ALVO: DPO, CISO, analista sênior ou profissional jurídico especializado.
+- Use terminologia técnica e jurídica precisa.
+- Referencie artigos da LGPD e controles normativos (ISO 27001, CIS Controls, NIST CSF) diretamente no texto da pergunta.
+- Exemplo BOM: "Os sistemas que tratam dados pessoais aplicam controle de acesso por mínimo privilégio com MFA obrigatório para acessos privilegiados (LGPD Art. 46 / ISO 27001 A.9 / CIS Control 6)?"
+- Exemplo RUIM: "Tem controle de acesso?"`,
   };
-  return `Você é especialista em LGPD, ISO/IEC 27001:2022, CIS Controls v8 e NIST CSF 2.0.\n\nPERFIL DO USUÁRIO: Nível ${pc.nivel} | Área: ${pc.area || 'não informada'} | LGPD: ${pc.lgpd_exp || 'não informada'}\nINSTRUÇÃO: ${nivelInstrucao[pc.nivel] || nivelInstrucao.intermediario}\n\nPERFIL ORG: ${po.nome || 'Empresa'} | ${po.porte} | ${po.setor} | ${po.colaboradores || '?'} colaboradores\nDados tratados: ${po.dados_tratados_label || po.dados_tratados?.join(', ') || 'não especificado'}\nPolíticas: ${(po.politicas || []).length}/4 | Setor sensível: ${po.setor_sensivel ? 'SIM' : 'NÃO'}\n\nDISTRIBUIÇÃO OBRIGATÓRIA (20 perguntas, escopos únicos por categoria):\nbase-legal(4): bases legais, política privacidade, consentimento, minimização\ndireitos(3): canal titular, prazo resposta, portabilidade\nsegurança(4): acesso/autenticação, criptografia, backup, inventário\ncompartilhamento(3): contratos fornecedores, transferência internacional, ROPA\nincidentes(3): plano resposta, notificação ANPD 72h, simulação\ngovernança(3): DPO, treinamento, revisão periódica\n\nPeso 3=crítico(máx 6) | Peso 2=importante | Peso 1=boa prática\nANTI-REPETIÇÃO: cada pergunta explora aspecto diferente dentro da categoria.\n${po.setor_sensivel ? 'Inclua 2 perguntas sobre dados sensíveis (LGPD Art. 11).' : ''}\n\nRetorne APENAS JSON válido:\n{"perguntas":[{"id":1,"texto":"...","categoria":"base-legal|direitos|segurança|compartilhamento|incidentes|governança","peso":1|2|3,"framework":"referência normativa"}]}`;
+
+  const escalaInstrucao = `
+ESCALA DE RESPOSTA OBRIGATÓRIA:
+Cada pergunta DEVE ser respondível na seguinte escala de 0 a 4:
+  0 = Não implementado — a prática não existe na organização
+  1 = Iniciado — há intenção ou esforço pontual, mas sem processo formal
+  2 = Parcial — existe, mas incompleto, inconsistente ou sem documentação
+  3 = Avançado — implementado e funcional, mas sem revisão/auditoria periódica
+  4 = Implementado — totalmente formalizado, documentado e revisado periodicamente
+
+REGRAS CRÍTICAS PARA FORMULAR AS PERGUNTAS:
+1. Cada pergunta deve avaliar UM único controle ou prática de conformidade.
+2. A pergunta deve ser objetiva: o respondente deve conseguir se posicionar claramente em 0, 1, 2, 3 ou 4.
+3. PROIBIDO fazer perguntas de sim/não (ex: "Você tem política de privacidade?"). Reformule para avaliar GRAU de maturidade (ex: "Em que medida a Política de Privacidade está formalizada, publicada e mantida atualizada?").
+4. PROIBIDO perguntas compostas com "e/ou" que avaliem duas práticas ao mesmo tempo.
+5. O respondente também pode marcar "Não sei responder" — portanto, perguntas muito técnicas demais para o perfil devem ser evitadas.`;
+
+  return `Você é um especialista sênior em conformidade com LGPD, ISO/IEC 27001:2022, CIS Controls v8 e NIST CSF 2.0. Sua tarefa é gerar um questionário de avaliação de maturidade em proteção de dados.
+
+═══════════════════════════════════════
+PERFIL DO RESPONDENTE
+═══════════════════════════════════════
+Nível de conhecimento: ${pc.nivel}
+Área de atuação: ${pc.area || 'não informada'}
+Experiência com LGPD: ${pc.lgpd_exp || 'não informada'}
+
+INSTRUÇÃO DE LINGUAGEM PARA ESTE PERFIL:
+${nivelInstrucao[pc.nivel] || nivelInstrucao.intermediario}
+
+═══════════════════════════════════════
+PERFIL DA ORGANIZAÇÃO
+═══════════════════════════════════════
+Empresa: ${po.nome || 'não informado'}
+Porte: ${po.porte}
+Setor: ${po.setor}
+Colaboradores: ${po.colaboradores || 'não informado'}
+Dados pessoais tratados: ${po.dados_tratados_label || po.dados_tratados?.join(', ') || 'não especificado'}
+Políticas já existentes: ${(po.politicas || []).length} de 4 informadas
+Setor com dados sensíveis: ${po.setor_sensivel ? 'SIM — inclua 2 perguntas sobre dados sensíveis (LGPD Art. 11)' : 'NÃO'}
+
+═══════════════════════════════════════
+${escalaInstrucao}
+
+═══════════════════════════════════════
+DISTRIBUIÇÃO OBRIGATÓRIA — 20 PERGUNTAS
+═══════════════════════════════════════
+Gere exatamente 20 perguntas distribuídas assim (sem repetir escopos dentro de cada categoria):
+
+1. base-legal (4 perguntas): mapeamento de bases legais, política de privacidade, registro de consentimento, princípio da minimização
+2. direitos (3 perguntas): canal de atendimento ao titular, prazo de resposta a solicitações, portabilidade de dados
+3. segurança (4 perguntas): controle de acesso e autenticação, criptografia de dados, backup e recuperação, inventário de ativos
+4. compartilhamento (3 perguntas): contratos com fornecedores (DPA), transferência internacional, registro de operações (ROPA)
+5. incidentes (3 perguntas): plano de resposta a incidentes, notificação à ANPD em 72h, simulações e testes
+6. governança (3 perguntas): designação do DPO, programa de treinamento, revisão periódica do programa de conformidade
+
+PESOS:
+- peso 3 = controle crítico (use no máximo 6 vezes no total)
+- peso 2 = controle importante
+- peso 1 = boa prática recomendada
+
+═══════════════════════════════════════
+FORMATO DE SAÍDA — APENAS JSON VÁLIDO
+═══════════════════════════════════════
+Retorne SOMENTE o JSON abaixo, sem texto antes ou depois, sem blocos de código markdown:
+
+{"perguntas":[{"id":1,"texto":"texto da pergunta aqui","categoria":"base-legal","peso":2,"framework":"LGPD Art. 7º"},{"id":2,"texto":"...","categoria":"direitos","peso":3,"framework":"LGPD Art. 18"}]}
+
+Categorias válidas: base-legal | direitos | segurança | compartilhamento | incidentes | governança
+Pesos válidos: 1 | 2 | 3`;
 }
 
 // ── Render e interação do questionário ────────────────
@@ -318,11 +401,46 @@ async function calcular() {
 // ── Relatório via proxy ───────────────────────────────
 async function gerarRelatorio(indice, ni, areaScores, d) {
   const instrRelatorio = {
-    basico: `BÁSICO: linguagem de conversa, sem jargões. Se houver perguntas ignoradas (${d.totalIgnoradas}), destaque que o resultado pode subestimar o risco. Se índice < 60% ou ignoradas > 3, inclua recomendação obrigatória para buscar DPO/especialista LGPD.`,
-    intermediario: `INTERMEDIÁRIO: termos LGPD com contexto prático. Verbos de processo: Revise, Documente, Formalize, Valide.`,
-    tecnico: `TÉCNICO: terminologia precisa com referências a artigos LGPD e controles ISO/CIS/NIST.`,
+    basico: `Linguagem simples, sem jargões. Escreva como se fosse uma orientação direta ao dono da empresa. Se houver perguntas ignoradas (${d.totalIgnoradas}), explique em palavras simples que o resultado pode estar subestimando o risco real. Se índice < 60% ou ignoradas > 3, inclua obrigatoriamente uma recomendação para buscar ajuda de um especialista ou advogado em LGPD.`,
+    intermediario: `Use termos da LGPD com contexto prático. Verbos de ação: Revise, Documente, Formalize, Valide, Implemente. Mencione artigos relevantes quando agregar valor.`,
+    tecnico: `Linguagem técnica e jurídica precisa. Referencie artigos da LGPD, controles ISO 27001, CIS Controls e NIST CSF nas recomendações. Seja direto e objetivo.`,
   };
-  const prompt = `Especialista LGPD. Relatório de conformidade em JSON.\nÍndice: ${indice}% | Nível: ${ni.nome} | ${d.empresa} (${d.porte}) | Setor: ${d.setor}\nÁreas: ${JSON.stringify(areaScores)} | Respondente: ${d.level}\nPerguntas ignoradas: ${d.totalIgnoradas} | Desconto aplicado: ${d.descontoAplicado}pts\nINSTRUÇÃO: ${instrRelatorio[d.level] || instrRelatorio.intermediario}\nRetorne APENAS JSON: {"diagnostico":"...","areas_criticas":["..."],"recomendacoes":[{"prioridade":"alta|media|baixa","acao":"...","prazo":"número"}],"plano_acao":"..."}\nMáx 5 recomendações. prazo = apenas o número em dias.`;
+
+  const prompt = `Você é um especialista sênior em conformidade com LGPD. Gere um relatório de avaliação de maturidade em JSON.
+
+═══════════════════════════════════════
+DADOS DA AVALIAÇÃO
+═══════════════════════════════════════
+Índice de conformidade: ${indice}%
+Nível de maturidade: ${ni.nome}
+Empresa: ${d.empresa} (${d.porte}) — Setor: ${d.setor}
+Perfil do respondente: ${d.level}
+Perguntas ignoradas ("Não sei responder"): ${d.totalIgnoradas}
+Desconto aplicado por desconhecimento: ${d.descontoAplicado} pontos
+Scores por área: ${JSON.stringify(areaScores)}
+
+═══════════════════════════════════════
+INSTRUÇÃO DE LINGUAGEM
+═══════════════════════════════════════
+${instrRelatorio[d.level] || instrRelatorio.intermediario}
+
+═══════════════════════════════════════
+REGRAS DO RELATÓRIO
+═══════════════════════════════════════
+1. diagnostico: parágrafo único e objetivo resumindo o estado atual de conformidade, destacando pontos fortes e áreas críticas.
+2. areas_criticas: liste apenas as áreas com score abaixo de 40%. Se nenhuma, retorne array vazio.
+3. recomendacoes: máximo 5 recomendações priorizadas. Cada uma deve ser uma ação concreta e executável (não vaga). prazo = apenas o número inteiro de dias.
+4. plano_acao: frase curta indicando por onde começar e qual é a sequência lógica de ação.
+
+═══════════════════════════════════════
+FORMATO DE SAÍDA — APENAS JSON VÁLIDO
+═══════════════════════════════════════
+Retorne SOMENTE o JSON abaixo, sem texto antes ou depois, sem blocos de código markdown:
+
+{"diagnostico":"...","areas_criticas":["..."],"recomendacoes":[{"prioridade":"alta","acao":"ação concreta aqui","prazo":"30"}],"plano_acao":"..."}
+
+Valores válidos para prioridade: alta | media | baixa`;
+
   const data = await api('POST', 'gemini/', { prompt, maxTokens: 1200 });
   const clean = (data.text || '').replace(/```json|```/g, '').trim();
   const s = clean.indexOf('{'), e = clean.lastIndexOf('}');
