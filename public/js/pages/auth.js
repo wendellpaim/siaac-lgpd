@@ -37,7 +37,7 @@ async function doRegister() {
   if (!nome || !email || !senha) { err.innerHTML = '<div class="err">Preencha os campos obrigatórios.</div>'; return; }
   if (senha !== senha2) { err.innerHTML = '<div class="err">As senhas não coincidem.</div>'; return; }
   try {
-    const data = await api('POST', 'auth/register/', { first_name: nome, last_name: sobrenome, email, password: senha, cargo, empresa });
+    const data = await api('POST', 'auth/register/', { nome, sobrenome, email, password: senha, cargo, empresa });
     AUTH_TOKEN = data.token;
     localStorage.setItem('siaac_token', AUTH_TOKEN);
     currentUser = data.user;

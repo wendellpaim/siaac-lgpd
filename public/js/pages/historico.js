@@ -105,7 +105,7 @@ function renderModal(av) {
               <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--hint)">Q${String(i + 1).padStart(2, '0')}</span>
               <span class="qcat ${cm.cls}">${cm.lbl}</span>
               ${q.ignorada ? '<span style="font-size:11px;font-weight:500;color:var(--warn);margin-left:auto">— Não soube responder</span>'
-                : q.resposta != null ? `<span style="font-size:11px;font-weight:600;color:${cor};margin-left:auto">${q.resposta} — ${q.resposta_label}</span>`
+                : q.resposta != null ? `<span style="font-size:11px;font-weight:600;color:${cor};margin-left:auto">${q.resposta} — ${LKRL[q.resposta] || ''}</span>`
                 : '<span style="font-size:11px;color:var(--hint);margin-left:auto">Não respondida</span>'}
             </div>
             <div style="font-size:13px;color:var(--text);line-height:1.5${q.ignorada ? ';opacity:.55' : ''}">${q.texto}</div>

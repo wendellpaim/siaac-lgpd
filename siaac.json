@@ -8,12 +8,28 @@
       "cargo": "DPO / Encarregado de Dados",
       "empresa": "IFBA Campus Feira",
       "criado_em": "2026-03-19T01:33:08.363Z"
+    },
+    {
+      "id": 2,
+      "nome": "Wendell Paim",
+      "email": "wendellpaimsouzaps@gmail.com",
+      "senha_hash": "$2a$12$xy8keW95vOS.MXiwVrp0e.z/3EvI6xeuS1yNjxEnE5qzfjsTR3r5C",
+      "cargo": "Analista de TI / Segurança",
+      "empresa": "Teste",
+      "criado_em": "2026-03-25T22:56:52.996Z"
     }
   ],
   "perfis_usuario": [
     {
       "id": 1,
       "user_id": 1,
+      "nivel": "basico",
+      "area": "TI / Tecnologia",
+      "lgpd_exp": "Básica — conheço os princípios gerais"
+    },
+    {
+      "id": 2,
+      "user_id": 2,
       "nivel": "basico",
       "area": "TI / Tecnologia",
       "lgpd_exp": "Básica — conheço os princípios gerais"
@@ -26,7 +42,7 @@
       "nome": "IFBA Campus Feira",
       "porte": "Grande empresa",
       "setor": "Educação",
-      "colaboradores": "250 ou mais",
+      "colaboradores": "10 a 49",
       "equipamentos": 0,
       "dados_tratados": [
         "cpf",
@@ -34,10 +50,25 @@
         "cri"
       ],
       "politicas": [
-        "priv",
-        "dpo",
-        "trei"
+        "priv"
       ]
+    },
+    {
+      "id": 2,
+      "user_id": 2,
+      "nome": "Teste",
+      "porte": "Pequena empresa (EPP)",
+      "setor": "Saúde / Clínicas",
+      "colaboradores": "1 a 9",
+      "equipamentos": 0,
+      "dados_tratados": [
+        "cpf",
+        "saude",
+        "fin",
+        "bio",
+        "comp"
+      ],
+      "politicas": []
     }
   ],
   "avaliacoes": [
@@ -65,27 +96,27 @@
       "criado_em": "2026-03-25T11:48:34.379Z"
     },
     {
-      "id": 7,
-      "user_id": 1,
-      "empresa": "IFBA Campus Feira",
-      "setor": "Educação",
-      "porte": "Grande empresa",
+      "id": 8,
+      "user_id": 2,
+      "empresa": "Teste",
+      "setor": "Saúde / Clínicas",
+      "porte": "Pequena empresa (EPP)",
       "nivel_usuario": "basico",
-      "indice": 33,
-      "nivel_maturidade": "Básico",
+      "indice": 41,
+      "nivel_maturidade": "Intermediário",
       "area_scores": {
-        "base-legal": 34,
-        "direitos": 42,
-        "segurança": 25,
-        "compartilhamento": 42,
-        "incidentes": 29,
-        "governança": 35
+        "base-legal": 38,
+        "direitos": 50,
+        "segurança": 53,
+        "compartilhamento": 46,
+        "incidentes": 0,
+        "governança": 45
       },
-      "diagnostico": "A IFBA Campus Feira apresenta um nível de maturidade básico em LGPD, com um índice de conformidade de 33%. Embora demonstre algum entendimento da base legal e dos direitos dos titulares, as áreas de segurança, incidentes e governança necessitam de atenção urgente. A conformidade atual é insuficiente para mitigar os riscos de sanções e danos à reputação. Uma resposta ignorada na avaliação pode indicar lacunas de conhecimento que subestimam o risco real.",
-      "plano_acao": "Comece pelo inventário de dados e plano de resposta a incidentes, pois são a base para a conformidade. Em seguida, foque na política de privacidade e treinamento.",
-      "perguntas_ignoradas": 1,
-      "desconto_aplicado": 1,
-      "criado_em": "2026-03-25T16:46:53.381Z"
+      "diagnostico": "Sua empresa demonstra um nível intermediário de conformidade com a LGPD, com um índice geral de 41%. Vocês já implementaram algumas medidas importantes, principalmente em segurança e direitos dos titulares, mas ainda existem áreas que precisam de atenção urgente. O baixo score em incidentes indica uma falta de preparo para lidar com situações de vazamento de dados, o que é um risco significativo. As duas perguntas que você não soube responder podem indicar que existem riscos que você desconhece, e o resultado final pode ser menor do que a realidade.",
+      "plano_acao": "Comece pelo plano de resposta a incidentes e pela revisão da base legal, pois são as áreas mais críticas. Em seguida, foque no registro de atividades e nas medidas de segurança.",
+      "perguntas_ignoradas": 2,
+      "desconto_aplicado": 2,
+      "criado_em": "2026-03-25T23:00:09.079Z"
     }
   ],
   "recomendacoes": [
@@ -135,48 +166,48 @@
       "concluida": false
     },
     {
-      "id": 24,
-      "avaliacao_id": 7,
+      "id": 29,
+      "avaliacao_id": 8,
       "ordem": 0,
       "prioridade": "alta",
-      "acao": "Implementar um inventário completo de dados pessoais coletados, armazenados e processados pela instituição, detalhando a finalidade de cada coleta.",
+      "acao": "Elabore um plano de resposta a incidentes de segurança, definindo etapas claras para identificar, conter, avaliar e comunicar vazamentos de dados.",
       "prazo_dias": 30,
       "concluida": false
     },
     {
-      "id": 25,
-      "avaliacao_id": 7,
+      "id": 30,
+      "avaliacao_id": 8,
       "ordem": 1,
       "prioridade": "alta",
-      "acao": "Elaborar e implementar um plano de resposta a incidentes de segurança que inclua procedimentos para identificação, contenção, notificação e análise de causas.",
-      "prazo_dias": 45,
-      "concluida": false
-    },
-    {
-      "id": 26,
-      "avaliacao_id": 7,
-      "ordem": 2,
-      "prioridade": "media",
-      "acao": "Criar e divulgar uma política de privacidade clara e acessível, informando aos titulares sobre seus direitos e como exercê-los.",
+      "acao": "Revise e atualize a base legal da sua empresa, incluindo termos de uso, políticas de privacidade e contratos com fornecedores, para garantir a conformidade com a LGPD.",
       "prazo_dias": 60,
       "concluida": false
     },
     {
-      "id": 27,
-      "avaliacao_id": 7,
-      "ordem": 3,
+      "id": 31,
+      "avaliacao_id": 8,
+      "ordem": 2,
       "prioridade": "media",
-      "acao": "Realizar um treinamento básico sobre LGPD para todos os funcionários que lidam com dados pessoais, abordando os princípios da lei e as responsabilidades de cada um.",
+      "acao": "Crie um registro de atividades de tratamento de dados (RAT), documentando quais dados são coletados, como são usados, com quem são compartilhados e por quanto tempo são armazenados.",
       "prazo_dias": 90,
       "concluida": false
     },
     {
-      "id": 28,
-      "avaliacao_id": 7,
+      "id": 32,
+      "avaliacao_id": 8,
+      "ordem": 3,
+      "prioridade": "media",
+      "acao": "Implemente medidas de segurança adicionais, como criptografia de dados em repouso e em trânsito, para proteger as informações pessoais dos seus clientes.",
+      "prazo_dias": 60,
+      "concluida": false
+    },
+    {
+      "id": 33,
+      "avaliacao_id": 8,
       "ordem": 4,
       "prioridade": "baixa",
-      "acao": "Revisar e atualizar os contratos com fornecedores que acessam ou processam dados pessoais em nome da IFBA, garantindo que eles também estejam em conformidade com a LGPD.",
-      "prazo_dias": 120,
+      "acao": "Realize treinamentos regulares com seus funcionários sobre a LGPD e as melhores práticas de proteção de dados.",
+      "prazo_dias": 180,
       "concluida": false
     }
   ],
@@ -402,54 +433,54 @@
       "ignorada": false
     },
     {
-      "id": 82,
-      "avaliacao_id": 7,
+      "id": 102,
+      "avaliacao_id": 8,
       "ordem": 1,
-      "texto": "Imagine que um cliente pergunte quais dados a IFBA Campus Feira tem dele e para que estão sendo usados. Em que medida a empresa possui uma política de privacidade clara e fácil de entender, que explica isso para o cliente?",
-      "categoria": "base-legal",
-      "peso": 3,
-      "framework": "LGPD Art. 14",
-      "resposta": 2,
-      "ignorada": false
-    },
-    {
-      "id": 83,
-      "avaliacao_id": 7,
-      "ordem": 2,
-      "texto": "Ao coletar dados de alunos e funcionários, a IFBA Campus Feira sempre explica de forma clara e direta por que precisa desses dados e o que fará com eles? (A Lei Geral de Proteção de Dados, a LGPD, exige que a empresa tenha uma justificativa válida para cada dado que coleta).",
+      "texto": "Imagine que um cliente te pergunte quais dados você coleta dele e para que você os usa. Em que medida você consegue responder a essa pergunta de forma clara e completa, com uma política de privacidade escrita e fácil de entender?",
       "categoria": "base-legal",
       "peso": 2,
-      "framework": "LGPD Art. 7º",
+      "framework": "LGPD Art. 14",
       "resposta": 1,
       "ignorada": false
     },
     {
-      "id": 84,
-      "avaliacao_id": 7,
-      "ordem": 3,
-      "texto": "Se a IFBA Campus Feira precisar usar os dados de um aluno para algo diferente do que foi originalmente informado (por exemplo, usar o endereço de e-mail para enviar novidades sobre cursos), como a empresa garante que obterá a permissão (consentimento) do aluno para essa nova finalidade?",
+      "id": 103,
+      "avaliacao_id": 8,
+      "ordem": 2,
+      "texto": "Quando você começa um novo projeto que envolve coletar dados de clientes (por exemplo, um novo software de agendamento), como você decide quais dados são realmente necessários e quais podem ser evitados?",
       "categoria": "base-legal",
       "peso": 1,
-      "framework": "LGPD Art. 7º",
-      "resposta": 1,
-      "ignorada": false
-    },
-    {
-      "id": 85,
-      "avaliacao_id": 7,
-      "ordem": 4,
-      "texto": "Ao coletar dados dos alunos, a IFBA Campus Feira se limita a pedir apenas as informações realmente necessárias para o processo de ensino e administrativo, evitando coletar dados desnecessários? (A LGPD fala em coletar apenas o essencial).",
-      "categoria": "base-legal",
-      "peso": 2,
       "framework": "LGPD Art. 6º",
       "resposta": 1,
       "ignorada": false
     },
     {
-      "id": 86,
-      "avaliacao_id": 7,
+      "id": 104,
+      "avaliacao_id": 8,
+      "ordem": 3,
+      "texto": "Se você precisa usar os dados de um cliente para algo diferente do que ele inicialmente concordou (por exemplo, usar o histórico de consultas para enviar promoções), como você garante que ele saiba disso e tenha a chance de concordar ou discordar? (A Lei Geral de Proteção de Dados, a LGPD, exige consentimento específico para cada finalidade).",
+      "categoria": "base-legal",
+      "peso": 2,
+      "framework": "LGPD Art. 7º",
+      "resposta": 2,
+      "ignorada": false
+    },
+    {
+      "id": 105,
+      "avaliacao_id": 8,
+      "ordem": 4,
+      "texto": "Sua empresa mantém um registro de todos os casos em que pediu permissão (consentimento) aos clientes para usar seus dados, incluindo quando a permissão foi dada e o que o cliente concordou?",
+      "categoria": "base-legal",
+      "peso": 1,
+      "framework": "LGPD Art. 13",
+      "resposta": 2,
+      "ignorada": false
+    },
+    {
+      "id": 106,
+      "avaliacao_id": 8,
       "ordem": 5,
-      "texto": "Se um aluno ou funcionário pedir para ver, corrigir ou apagar seus dados pessoais que a IFBA Campus Feira possui, existe um canal de comunicação (como um e-mail ou formulário) para que ele possa fazer essa solicitação?",
+      "texto": "Se um cliente pedir para ver os dados que você tem dele, ou para corrigir algum erro, ou até mesmo para apagar esses dados, como sua empresa lida com esse pedido?",
       "categoria": "direitos",
       "peso": 3,
       "framework": "LGPD Art. 18",
@@ -457,76 +488,76 @@
       "ignorada": false
     },
     {
-      "id": 87,
-      "avaliacao_id": 7,
+      "id": 107,
+      "avaliacao_id": 8,
       "ordem": 6,
-      "texto": "Quando a IFBA Campus Feira recebe um pedido de um aluno ou funcionário para exercer seus direitos sobre seus dados (como o direito de correção), em quanto tempo a empresa costuma dar uma resposta?",
+      "texto": "Em quanto tempo, em média, sua empresa consegue responder a um pedido de um cliente sobre seus dados (por exemplo, um pedido para ver, corrigir ou apagar informações)?",
       "categoria": "direitos",
       "peso": 2,
       "framework": "LGPD Art. 19",
-      "resposta": 1,
+      "resposta": 2,
       "ignorada": false
     },
     {
-      "id": 88,
-      "avaliacao_id": 7,
+      "id": 108,
+      "avaliacao_id": 8,
       "ordem": 7,
-      "texto": "Se um aluno solicitar que seus dados sejam transferidos para outra instituição de ensino, a IFBA Campus Feira possui um processo para garantir que essa transferência seja feita de forma segura e em um formato que a outra instituição possa utilizar? (Isso é o direito à portabilidade de dados).",
+      "texto": "Se um cliente pedir para levar os dados dele para outro médico ou clínica (o que chamamos de 'portabilidade'), como você garante que ele receba esses dados de forma segura e fácil?",
       "categoria": "direitos",
-      "peso": 1,
+      "peso": 2,
       "framework": "LGPD Art. 20",
       "resposta": 2,
       "ignorada": false
     },
     {
-      "id": 89,
-      "avaliacao_id": 7,
+      "id": 109,
+      "avaliacao_id": 8,
       "ordem": 8,
-      "texto": "Quem tem acesso aos sistemas da IFBA Campus Feira que armazenam dados pessoais de alunos e funcionários? Existe um controle rigoroso de quem pode ver e modificar essas informações?",
+      "texto": "Quem tem acesso aos computadores e sistemas onde os dados dos pacientes ficam armazenados? Existe algum controle para garantir que apenas pessoas autorizadas possam ver essas informações?",
       "categoria": "segurança",
       "peso": 3,
       "framework": "ISO/IEC 27001:2022 - A.9.2.1",
-      "resposta": 2,
+      "resposta": 3,
       "ignorada": false
     },
     {
-      "id": 90,
-      "avaliacao_id": 7,
+      "id": 110,
+      "avaliacao_id": 8,
       "ordem": 9,
-      "texto": "A IFBA Campus Feira utiliza alguma forma de proteção (como senhas fortes ou sistemas de autenticação em duas etapas) para garantir que apenas pessoas autorizadas possam acessar os dados pessoais armazenados?",
+      "texto": "Você usa alguma forma de 'embaralhar' ou proteger os dados dos pacientes (como senhas ou criptografia) para que, mesmo que alguém consiga acessá-los, não consiga entender o que eles significam?",
       "categoria": "segurança",
       "peso": 2,
-      "framework": "CIS Controls v8 - 1.1",
+      "framework": "NIST CSF 2.0 - PR.DS-3",
+      "resposta": 3,
+      "ignorada": false
+    },
+    {
+      "id": 111,
+      "avaliacao_id": 8,
+      "ordem": 10,
+      "texto": "Sua empresa faz cópias de segurança (backup) dos dados dos pacientes regularmente? E você já testou se consegue recuperar esses dados em caso de algum problema (como um ataque de vírus ou uma falha no computador)?",
+      "categoria": "segurança",
+      "peso": 3,
+      "framework": "CIS Controls v8 - 10",
       "resposta": 1,
       "ignorada": false
     },
     {
-      "id": 91,
-      "avaliacao_id": 7,
-      "ordem": 10,
-      "texto": "Para evitar a perda de dados em caso de problemas técnicos ou ataques, a IFBA Campus Feira faz cópias de segurança (backup) dos dados pessoais regularmente? E essas cópias podem ser recuperadas quando necessário?",
-      "categoria": "segurança",
-      "peso": 2,
-      "framework": "NIST CSF 2.0 - ID.AM-3",
-      "resposta": null,
-      "ignorada": true
-    },
-    {
-      "id": 92,
-      "avaliacao_id": 7,
+      "id": 112,
+      "avaliacao_id": 8,
       "ordem": 11,
-      "texto": "A IFBA Campus Feira mantém um registro atualizado de todos os equipamentos (computadores, servidores, etc.) e sistemas que armazenam dados pessoais de alunos e funcionários?",
+      "texto": "Você tem uma lista atualizada de todos os computadores, celulares, tablets e outros aparelhos que acessam os dados dos pacientes?",
       "categoria": "segurança",
       "peso": 1,
-      "framework": "CIS Controls v8 - 1.2",
-      "resposta": 0,
+      "framework": "CIS Controls v8 - 1",
+      "resposta": 1,
       "ignorada": false
     },
     {
-      "id": 93,
-      "avaliacao_id": 7,
+      "id": 113,
+      "avaliacao_id": 8,
       "ordem": 12,
-      "texto": "Quando a IFBA Campus Feira contrata uma empresa para prestar serviços que envolvem o acesso a dados pessoais (como um sistema de gestão de alunos), existe um contrato que garante que essa empresa protegerá os dados de acordo com a LGPD? (Esse contrato é chamado de Termo de Proteção de Dados).",
+      "texto": "Quando você contrata uma empresa para te ajudar com algo que envolve dados dos pacientes (por exemplo, um software de prontuário eletrônico), como você garante que essa empresa também protege esses dados de forma adequada? (Isso geralmente é feito através de um contrato específico).",
       "categoria": "compartilhamento",
       "peso": 3,
       "framework": "LGPD Art. 43",
@@ -534,100 +565,100 @@
       "ignorada": false
     },
     {
-      "id": 94,
-      "avaliacao_id": 7,
+      "id": 114,
+      "avaliacao_id": 8,
       "ordem": 13,
-      "texto": "Se a IFBA Campus Feira precisar enviar dados pessoais de alunos para outro país (por exemplo, para um serviço de armazenamento em nuvem localizado nos Estados Unidos), como a empresa garante que esses dados estarão protegidos de acordo com a LGPD?",
+      "texto": "Se você precisa enviar dados de pacientes para outro país (por exemplo, para um serviço de armazenamento em nuvem que fica nos Estados Unidos), como você garante que esses dados continuem protegidos de acordo com a lei brasileira?",
       "categoria": "compartilhamento",
       "peso": 2,
       "framework": "LGPD Art. 44",
-      "resposta": 1,
+      "resposta": 2,
       "ignorada": false
     },
     {
-      "id": 95,
-      "avaliacao_id": 7,
+      "id": 115,
+      "avaliacao_id": 8,
       "ordem": 14,
-      "texto": "A IFBA Campus Feira possui um registro detalhado de quais dados pessoais coleta, com quem compartilha, por que compartilha e por quanto tempo guarda? (Esse registro é chamado de Relatório de Operações de Tratamento de Dados Pessoais - ROPA).",
+      "texto": "Você mantém um registro de com quem você compartilha os dados dos pacientes, para qual finalidade e por quanto tempo? (Esse registro é chamado de 'Registro de Operações de Tratamento de Dados Pessoais' ou ROPA).",
       "categoria": "compartilhamento",
       "peso": 1,
       "framework": "LGPD Art. 41",
-      "resposta": 2,
-      "ignorada": false
-    },
-    {
-      "id": 96,
-      "avaliacao_id": 7,
-      "ordem": 15,
-      "texto": "Se a IFBA Campus Feira sofrer um incidente de segurança que coloque em risco os dados pessoais de alunos e funcionários (como um vazamento de dados), existe um plano para lidar com essa situação de forma rápida e eficiente?",
-      "categoria": "incidentes",
-      "peso": 3,
-      "framework": "LGPD Art. 48",
       "resposta": 1,
       "ignorada": false
     },
     {
-      "id": 97,
-      "avaliacao_id": 7,
+      "id": 116,
+      "avaliacao_id": 8,
+      "ordem": 15,
+      "texto": "Se alguém conseguir invadir os sistemas da sua empresa e roubar dados dos pacientes, qual seria o primeiro passo? Sua empresa tem um plano para lidar com esse tipo de situação?",
+      "categoria": "incidentes",
+      "peso": 3,
+      "framework": "NIST CSF 2.0 - DE.CM-1",
+      "resposta": null,
+      "ignorada": false
+    },
+    {
+      "id": 117,
+      "avaliacao_id": 8,
       "ordem": 16,
-      "texto": "Em caso de um incidente de segurança envolvendo dados pessoais, a IFBA Campus Feira sabe como e quando deve informar a Autoridade Nacional de Proteção de Dados (ANPD) e os próprios titulares dos dados? (A LGPD exige notificação em até 72 horas).",
+      "texto": "Se você descobrir que os dados dos pacientes foram vazados, você sabe que precisa avisar a Autoridade Nacional de Proteção de Dados (ANPD) em até 72 horas. Você sabe como fazer isso?",
       "categoria": "incidentes",
       "peso": 2,
       "framework": "LGPD Art. 48",
-      "resposta": 1,
-      "ignorada": false
+      "resposta": null,
+      "ignorada": true
     },
     {
-      "id": 98,
-      "avaliacao_id": 7,
+      "id": 118,
+      "avaliacao_id": 8,
       "ordem": 17,
-      "texto": "A IFBA Campus Feira realiza testes ou simulações para verificar se o plano de resposta a incidentes de segurança está funcionando corretamente?",
+      "texto": "Sua empresa já fez algum teste ou simulação para ver como ela reagiria a um vazamento de dados?",
       "categoria": "incidentes",
       "peso": 1,
-      "framework": "NIST CSF 2.0 - DE.CM-7",
-      "resposta": 2,
-      "ignorada": false
+      "framework": "ISO/IEC 27001:2022 - A.18.2.3",
+      "resposta": null,
+      "ignorada": true
     },
     {
-      "id": 99,
-      "avaliacao_id": 7,
+      "id": 119,
+      "avaliacao_id": 8,
       "ordem": 18,
-      "texto": "Existe uma pessoa ou equipe na IFBA Campus Feira responsável por garantir que a empresa esteja cumprindo a LGPD e outras leis de proteção de dados? (Essa pessoa é chamada de Encarregado de Proteção de Dados - DPO).",
+      "texto": "Existe alguém na sua empresa que é responsável por garantir que a empresa esteja cumprindo a Lei Geral de Proteção de Dados (LGPD)? (Essa pessoa pode ser chamada de 'Encarregado de Proteção de Dados' ou DPO).",
       "categoria": "governança",
       "peso": 2,
       "framework": "LGPD Art. 41",
+      "resposta": 1,
+      "ignorada": false
+    },
+    {
+      "id": 120,
+      "avaliacao_id": 8,
+      "ordem": 19,
+      "texto": "Você oferece algum tipo de treinamento para os funcionários sobre como proteger os dados dos pacientes e cumprir a Lei Geral de Proteção de Dados (LGPD)?",
+      "categoria": "governança",
+      "peso": 2,
+      "framework": "ISO/IEC 27001:2022 - A.7.2.2",
       "resposta": 2,
       "ignorada": false
     },
     {
-      "id": 100,
-      "avaliacao_id": 7,
-      "ordem": 19,
-      "texto": "A IFBA Campus Feira oferece treinamento regular para seus funcionários sobre a importância da proteção de dados e como lidar com informações pessoais de forma segura?",
-      "categoria": "governança",
-      "peso": 2,
-      "framework": "ISO/IEC 27001:2022 - A.7.2.2",
-      "resposta": 1,
-      "ignorada": false
-    },
-    {
-      "id": 101,
-      "avaliacao_id": 7,
+      "id": 121,
+      "avaliacao_id": 8,
       "ordem": 20,
-      "texto": "A IFBA Campus Feira revisa periodicamente suas políticas e procedimentos de proteção de dados para garantir que eles estejam atualizados e eficazes?",
+      "texto": "Com que frequência você revisa as práticas de proteção de dados da sua empresa para garantir que elas ainda estão funcionando bem e que a empresa está cumprindo a lei?",
       "categoria": "governança",
       "peso": 1,
-      "framework": "ISO/IEC 27001:2022 - A.8.3.1",
-      "resposta": 1,
+      "framework": "ISO/IEC 27001:2022 - A.18.1.1",
+      "resposta": 3,
       "ignorada": false
     }
   ],
   "rascunhos": [],
   "_seq": {
-    "usuarios": 1,
-    "avaliacoes": 7,
-    "recomendacoes": 28,
-    "historico_qa": 101,
+    "usuarios": 2,
+    "avaliacoes": 8,
+    "recomendacoes": 33,
+    "historico_qa": 121,
     "rascunhos": 0
   }
 }
