@@ -35,14 +35,14 @@ function initNova() {
 function renderProfileReviews() {
   const pc = currentUser?.perfil || {};
   const po = currentUser?.perfil_org || {};
-  const levelLabel = { basico: 'Básico', intermediario: 'Intermediário', tecnico: 'Técnico' };
   const cogEl = document.getElementById('cog-preview');
   if (pc.nivel) {
+    const levelLabel = { basico: 'Iniciante', intermediario: 'Intermediário', tecnico: 'Especialista' };
     cogEl.innerHTML = `<div class="pr-header"><div class="pr-title">👤 Perfil do Usuário</div></div>
       <div class="pr-body"><div class="pr-row">
         <div class="pr-field"><div class="pr-lbl">Nível</div><div class="pr-val">${levelLabel[pc.nivel] || pc.nivel}</div></div>
         <div class="pr-field"><div class="pr-lbl">Área</div><div class="pr-val">${pc.area || '—'}</div></div>
-        <div class="pr-field"><div class="pr-lbl">Exp. LGPD</div><div class="pr-val">${(pc.lgpd_exp || '—').split('—')[0].trim()}</div></div>
+        <div class="pr-field"><div class="pr-lbl">Cargo</div><div class="pr-val">${pc.cargo || currentUser?.cargo || '—'}</div></div>
       </div></div>`;
   } else {
     cogEl.innerHTML = `<div class="pr-header"><div class="pr-title">👤 Perfil do Usuário</div>
@@ -174,6 +174,8 @@ function buildPrompt(pc, po) {
 - Exemplo RUIM: "Tem controle de acesso?"`,
   };
 
+  const nivelLabel = { basico: 'Iniciante', intermediario: 'Intermediário', tecnico: 'Especialista' };
+
   const escalaInstrucao = `
 ESCALA DE RESPOSTA OBRIGATÓRIA:
 Cada pergunta DEVE ser respondível na seguinte escala de 0 a 4:
@@ -195,9 +197,9 @@ REGRAS CRÍTICAS PARA FORMULAR AS PERGUNTAS:
 ═══════════════════════════════════════
 PERFIL DO RESPONDENTE
 ═══════════════════════════════════════
-Nível de conhecimento: ${pc.nivel}
+Nível de conhecimento: ${nivelLabel[pc.nivel] || pc.nivel}
+Cargo / Função: ${pc.cargo || currentUser?.cargo || 'não informado'}
 Área de atuação: ${pc.area || 'não informada'}
-Experiência com LGPD: ${pc.lgpd_exp || 'não informada'}
 
 INSTRUÇÃO DE LINGUAGEM PARA ESTE PERFIL:
 ${nivelInstrucao[pc.nivel] || nivelInstrucao.intermediario}

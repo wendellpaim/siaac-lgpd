@@ -18,7 +18,8 @@ function userPayload(userId) {
   const dadosLabel = {cpf:'CPF/RG',saude:'Saúde',fin:'Financeiros',bio:'Biométricos',cri:'Crianças',loc:'Localização',comp:'Comportamentais'};
   po.setor_sensivel = setorSensivel;
   po.dados_tratados_label = (po.dados_tratados || []).map(d => dadosLabel[d] || d).join(', ') || 'não especificado';
-  return { ...u, perfil: pc, perfil_org: po };
+  // Garante que 'nome' e 'nome_completo' sejam sempre equivalentes
+  return { ...u, nome_completo: u?.nome || '', perfil: pc, perfil_org: po };
 }
 
 // POST /api/auth/register
@@ -30,6 +31,9 @@ router.post('/register', async (req, res) => {
   const nomeCompleto = [nome, sobrenome].filter(Boolean).join(' ');
   const hash = await bcrypt.hash(password, 12);
   const userId = usuarios.create(nomeCompleto, email.toLowerCase(), hash, cargo || '', empresa || '');
+  // Pré-popula perfil com dados do cadastro
+  if (cargo) perfis.updateUsuario(userId, { cargo });
+  if (empresa) perfis.updateOrg(userId, { nome: empresa });
   res.status(201).json({ token: makeToken(userId), user: userPayload(userId) });
 });
 
@@ -50,8 +54,8 @@ router.get('/me', auth, (req, res) => {
 
 // PATCH /api/auth/perfil
 router.patch('/perfil', auth, (req, res) => {
-  const { nivel, area, lgpd_exp } = req.body;
-  perfis.updateUsuario(req.user.id, { nivel, area, lgpd_exp });
+  const { nivel, area, lgpd_exp, cargo } = req.body;
+  perfis.updateUsuario(req.user.id, { nivel, area, lgpd_exp, cargo });
   res.json(perfis.getUsuario(req.user.id));
 });
 

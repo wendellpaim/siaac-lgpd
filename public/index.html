@@ -218,26 +218,48 @@
       </div>
       <div class="card" id="edit-cognitivo" style="display:none">
         <strong style="font-size:15px">Editar perfil do usuário</strong>
-        <div class="lgrid" id="edit-level-grid" style="margin-top:14px">
-          <div class="lcard" onclick="selLevel('basico',this,'edit')"><div class="ck">✓</div><div class="lc-ico">📗</div><div class="lc-n">Básico</div><div class="lc-d">Gestores sem formação técnica</div></div>
-          <div class="lcard" onclick="selLevel('intermediario',this,'edit')"><div class="ck">✓</div><div class="lc-ico">📘</div><div class="lc-n">Intermediário</div><div class="lc-d">Analistas, RH, Jurídico</div></div>
-          <div class="lcard" onclick="selLevel('tecnico',this,'edit')"><div class="ck">✓</div><div class="lc-ico">📙</div><div class="lc-n">Técnico</div><div class="lc-d">DPO, CISO, Analistas sênior</div></div>
-        </div>
-        <div class="g2" style="margin-top:14px">
-          <div class="f"><label>Área de atuação</label>
+
+        <div class="sh" style="margin-top:16px">Dados pessoais</div>
+        <div class="g2">
+          <div class="f gfull">
+            <label>Cargo / Função</label>
+            <input type="text" id="edit-pc-cargo" placeholder="Ex: Analista de TI, DPO, Gestor..."/>
+            <span style="font-size:11px;color:var(--hint);margin-top:2px">Preenchido automaticamente do cadastro. Edite se necessário.</span>
+          </div>
+          <div class="f gfull">
+            <label>Área de atuação</label>
             <select id="edit-pc-area"><option value="">Selecione...</option>
               <option>TI / Tecnologia</option><option>Jurídico / Compliance</option>
               <option>RH / Pessoas</option><option>Gestão / Diretoria</option>
-              <option>Financeiro</option><option>Marketing / Dados</option><option>Operações</option></select></div>
-          <div class="f"><label>Experiência com LGPD</label>
-            <select id="edit-pc-lgpd"><option value="">Selecione...</option>
-              <option>Nenhuma — ouvi falar pela primeira vez</option>
-              <option>Básica — conheço os princípios gerais</option>
-              <option>Intermediária — já participei de adequações</option>
-              <option>Avançada — atuo como DPO ou equivalente</option></select></div>
+              <option>Financeiro</option><option>Marketing / Dados</option><option>Operações</option></select>
+          </div>
         </div>
+
+        <div class="sh">Nível de conhecimento em proteção de dados</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Define a linguagem e complexidade das perguntas geradas para você.</p>
+        <div class="lgrid" id="edit-level-grid">
+          <div class="lcard" onclick="selLevel('basico',this,'edit')">
+            <div class="ck">✓</div>
+            <div class="lc-ico">📗</div>
+            <div class="lc-n">Iniciante</div>
+            <div class="lc-d">Pouco ou nenhum contato com LGPD. Gestores, donos de empresa e áreas de negócio.</div>
+          </div>
+          <div class="lcard" onclick="selLevel('intermediario',this,'edit')">
+            <div class="ck">✓</div>
+            <div class="lc-ico">📘</div>
+            <div class="lc-n">Intermediário</div>
+            <div class="lc-d">Conhece os princípios da LGPD e já participou de adequações. RH, Jurídico, Analistas.</div>
+          </div>
+          <div class="lcard" onclick="selLevel('tecnico',this,'edit')">
+            <div class="ck">✓</div>
+            <div class="lc-ico">📙</div>
+            <div class="lc-n">Especialista</div>
+            <div class="lc-d">Atua como DPO, CISO ou especialista. Domina normas ISO, CIS e artigos da LGPD.</div>
+          </div>
+        </div>
+
         <div id="edit-cog-ok" style="display:none" class="ok">✓ Perfil atualizado.</div>
-        <button class="btn bp" style="margin-top:12px" onclick="salvarPerfilCognitivo()">Salvar</button>
+        <button class="btn bp" style="margin-top:16px" onclick="salvarPerfilCognitivo()">Salvar</button>
       </div>
       <div class="card" id="edit-org" style="display:none">
         <strong style="font-size:15px">Editar perfil organizacional</strong>

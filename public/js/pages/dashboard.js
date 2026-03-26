@@ -13,7 +13,7 @@ function barColor(v) { return v >= 60 ? '#1a5c3a' : v >= 40 ? '#e67e22' : '#c039
 function levelColorCls(i) { if (i <= 20) return 'mv-r'; if (i <= 60) return 'mv-a'; if (i <= 80) return 'mv-b'; return 'mv-g'; }
 
 function renderDashboard() {
-  document.getElementById('dash-greeting').textContent = 'Olá, ' + (currentUser?.nome_completo?.split(' ')[0] || '') + ' 👋';
+  document.getElementById('dash-greeting').textContent = 'Olá, ' + ((currentUser?.nome || currentUser?.nome_completo || '')?.split(' ')[0] || '') + ' 👋';
   const ult = avaliacoes[0];
   const med = avaliacoes.length ? Math.round(avaliacoes.reduce((s, a) => s + a.indice, 0) / avaliacoes.length) : 0;
   const best = avaliacoes.length ? Math.max(...avaliacoes.map(a => a.indice)) : 0;

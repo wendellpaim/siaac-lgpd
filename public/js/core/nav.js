@@ -23,7 +23,7 @@ function showAuth() {
 async function launchApp() {
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('main-app').style.display = 'flex';
-  const nome = currentUser.nome_completo || currentUser.email;
+  const nome = currentUser.nome || currentUser.nome_completo || currentUser.email;
   const ini = nome.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
   document.getElementById('u-av').textContent = ini;
   document.getElementById('u-name').textContent = nome;

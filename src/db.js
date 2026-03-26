@@ -50,7 +50,7 @@ const usuarios = {
       cargo, empresa, criado_em: now()
     }).write();
     // Cria perfis vazios
-    db.get('perfis_usuario').push({ id, user_id: id, nivel: '', area: '', lgpd_exp: '' }).write();
+    db.get('perfis_usuario').push({ id, user_id: id, nivel: '', area: '', lgpd_exp: '', cargo: '' }).write();
     db.get('perfis_org').push({
       id, user_id: id, nome: '', porte: '', setor: '',
       colaboradores: '', equipamentos: 0,
@@ -76,10 +76,15 @@ const perfis = {
     };
   },
 
-  updateUsuario: (userId, { nivel, area, lgpd_exp }) => {
+  updateUsuario: (userId, data) => {
+    const patch = {};
+    if (data.nivel     !== undefined) patch.nivel     = data.nivel     || '';
+    if (data.area      !== undefined) patch.area      = data.area      || '';
+    if (data.lgpd_exp  !== undefined) patch.lgpd_exp  = data.lgpd_exp  || '';
+    if (data.cargo     !== undefined) patch.cargo     = data.cargo     || '';
     db.get('perfis_usuario')
       .find({ user_id: userId })
-      .assign({ nivel: nivel || '', area: area || '', lgpd_exp: lgpd_exp || '' })
+      .assign(patch)
       .write();
   },
 
