@@ -12,7 +12,7 @@ function renderHistorico() {
   else if (fOrder === 'sd') avs.sort((a, b) => b.indice - a.indice);
   else if (fOrder === 'sa') avs.sort((a, b) => a.indice - b.indice);
   const hc = document.getElementById('hcount');
-  if (hc) hc.textContent = `${avs.length} avaliação${avs.length !== 1 ? 'ões' : ''}`;
+  if (hc) hc.textContent = `${avs.length} ${avs.length !== 1 ? 'avaliações' : 'avaliação'}`;
   const el = document.getElementById('hist-list');
   el.innerHTML = avs.length ? avs.map(av => hcardHTML(av)).join('') : '<div class="he"><p>Nenhuma avaliação encontrada.</p><button class="btn bp" onclick="navTo(\'nova\')" style="margin-top:12px">+ Nova avaliação</button></div>';
 }

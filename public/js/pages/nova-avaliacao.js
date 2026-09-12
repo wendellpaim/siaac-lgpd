@@ -266,7 +266,7 @@ function renderQ(level) {
       <div class="likert">${[0, 1, 2, 3, 4].map(v => `<label class="lkb" id="lk-${q.id}-${v}" onclick="setAns(${q.id},${v})">
         <div class="lkd">${v}</div><span class="lkl">${LKRL[v]}</span></label>`).join('')}</div>
       <div class="skip-row">
-        <button class="skip-btn" id="skip-${q.id}" onclick="toggleSkip(${q.id})" title="Esta pergunta não será considerada no cálculo">? Não sei responder</button>
+        <button class="skip-btn" id="skip-${q.id}" onclick="toggleSkip(${q.id})" title="Esta pergunta não será considerada no cálculo"> Não sei responder</button>
       </div>
     </div>`;
   }).join('');
@@ -282,7 +282,7 @@ function setAns(qid, val) {
   if (evalSkipped[qid]) {
     delete evalSkipped[qid];
     const card = document.getElementById(`qcard-${qid}`); if (card) card.classList.remove('skipped-card');
-    const sb = document.getElementById(`skip-${qid}`); if (sb) { sb.classList.remove('skipped'); sb.textContent = '? Não sei responder'; }
+    const sb = document.getElementById(`skip-${qid}`); if (sb) { sb.classList.remove('skipped'); sb.textContent = ' Não sei responder'; }
   }
   evalAnswers[qid] = val;
   [0, 1, 2, 3, 4].forEach(v => { const el = document.getElementById(`lk-${qid}-${v}`); if (el) el.className = 'lkb'; });
@@ -302,7 +302,7 @@ function toggleSkip(qid) {
   if (evalSkipped[qid]) {
     delete evalSkipped[qid];
     const card = document.getElementById(`qcard-${qid}`); if (card) card.classList.remove('skipped-card');
-    const sb = document.getElementById(`skip-${qid}`); if (sb) { sb.classList.remove('skipped'); sb.textContent = '? Não sei responder'; }
+    const sb = document.getElementById(`skip-${qid}`); if (sb) { sb.classList.remove('skipped'); sb.textContent = ' Não sei responder'; }
   } else {
     delete evalAnswers[qid];
     evalSkipped[qid] = true;

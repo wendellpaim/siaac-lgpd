@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const router = express.Router();
 
 // gemini-2.0-flash: modelo estável atual, suportado no plano gratuito
-const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:generateContent';
+const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemma-3n-e4b-it:generateContent';
 
 // Aguarda N segundos
 const esperar = (ms) => new Promise(r => setTimeout(r, ms));

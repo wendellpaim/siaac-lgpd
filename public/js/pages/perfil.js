@@ -22,7 +22,7 @@ function renderPerfil() {
   const po = u.perfil_org || {};
   document.getElementById('pf-empresa').textContent = po.nome || u.empresa || '—';
   document.getElementById('pf-total').textContent =
-    avaliacoes.length + ' avaliação' + (avaliacoes.length !== 1 ? 'ões' : '');
+    avaliacoes.length + (avaliacoes.length !== 1 ? ' avaliações' : ' avaliação');
 
   // ── Campos de edição: perfil de usuário ──
   document.getElementById('edit-pc-cargo').value = pc.cargo || u.cargo || '';

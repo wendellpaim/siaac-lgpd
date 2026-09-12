@@ -1,0 +1,70 @@
+{
+  "cenarios": [
+    {
+      "id": "C1",
+      "nome": "Varejo — nível básico — sem políticas",
+      "descricao": "Micro loja de varejo, gestor sem formação técnica, nenhuma política documentada",
+      "perfil_usuario": {
+        "nivel": "basico",
+        "area": "Gestão / Diretoria",
+        "cargo": "Proprietário",
+        "lgpd_exp": "Nenhuma — ouvi falar da lei mas não li"
+      },
+      "perfil_org": {
+        "nome": "Loja Exemplo ME",
+        "porte": "Microempresa (MEI)",
+        "setor": "Varejo / Comércio",
+        "colaboradores": "1 a 9",
+        "equipamentos": 2,
+        "dados_tratados": ["cpf", "fin", "loc"],
+        "politicas": [],
+        "setor_sensivel": false
+      },
+      "respostas_representativas": 0
+    },
+    {
+      "id": "C2",
+      "nome": "Serviços — nível intermediário — políticas básicas",
+      "descricao": "Escritório de serviços profissionais com políticas básicas de privacidade",
+      "perfil_usuario": {
+        "nivel": "intermediario",
+        "area": "Jurídico / Compliance",
+        "cargo": "Analista de Compliance",
+        "lgpd_exp": "Intermediária — já implementei políticas básicas"
+      },
+      "perfil_org": {
+        "nome": "Consultoria Alfa Ltda",
+        "porte": "Pequena empresa (EPP)",
+        "setor": "Serviços profissionais",
+        "colaboradores": "10 a 49",
+        "equipamentos": 8,
+        "dados_tratados": ["cpf", "fin", "comp"],
+        "politicas": ["priv"],
+        "setor_sensivel": false
+      },
+      "respostas_representativas": 2
+    },
+    {
+      "id": "C3",
+      "nome": "TI — nível técnico — políticas avançadas",
+      "descricao": "Empresa de tecnologia com programa formal de conformidade e DPO",
+      "perfil_usuario": {
+        "nivel": "tecnico",
+        "area": "TI / Tecnologia",
+        "cargo": "DPO / CISO",
+        "lgpd_exp": "Avançada — certificações e auditorias periódicas"
+      },
+      "perfil_org": {
+        "nome": "TechSecure Sistemas",
+        "porte": "Média empresa",
+        "setor": "TI / Tecnologia",
+        "colaboradores": "50 a 249",
+        "equipamentos": 45,
+        "dados_tratados": ["cpf", "saude", "fin", "bio", "comp"],
+        "politicas": ["priv", "sec", "inc", "trein"],
+        "setor_sensivel": false
+      },
+      "respostas_representativas": 4
+    }
+  ]
+}

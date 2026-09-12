@@ -155,8 +155,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0
 /* ── GAUGE ── */
 .gauge{display:flex;flex-direction:column;align-items:center;padding:28px 24px;background:linear-gradient(135deg,var(--brand-d) 0%,var(--brand) 100%);border-radius:var(--r);color:#fff;margin-bottom:18px;position:relative;overflow:hidden}
 .gauge::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border:1px solid rgba(255,255,255,.06);border-radius:50%}
-.gscore{font-size:60px;font-weight:600;line-height:1;letter-spacing:-2px}
-.gunit{font-size:24px;font-weight:300;opacity:.6}
+.gscore,#g-score{font-size:60px;font-weight:600;line-height:1;letter-spacing:-2px}
+.gunit{font-size:28px;font-weight:300;opacity:.6;vertical-align:super;line-height:1}
+.glevel,#g-level{font-size:17px;font-weight:500;margin-top:6px;opacity:.9}
 .glevel{font-size:17px;font-weight:500;margin-top:6px;opacity:.9}
 .gbar{width:100%;max-width:300px;height:5px;background:rgba(255,255,255,.2);border-radius:3px;margin-top:14px;overflow:hidden}
 .gfill{height:100%;background:var(--accent);border-radius:3px;transition:width 1s ease}
